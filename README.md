@@ -1,13 +1,7 @@
-# Convert scientific papers to S2ORC JSON
+# Convert scientific papers to S2ORC TEXT
 
-This project is a part of [S2ORC](https://github.com/allenai/s2orc). For S2ORC, we convert PDFs to JSON using Grobid and a custom TEI.XML to JSON parser. That TEI.XML to JSON parser (`grobid2json`) is made available here. We additionally process LaTeX dumps from arXiv. That parser (`tex2json`) is also made available here.
-
-The S2ORC github page includes a JSON schema, but it may be easier to understand that schema based on the python classes in `doc2json/s2orc.py`.
-
-This custom JSON schema is also used for the [CORD-19](https://github.com/allenai/cord19) project, so those who have interacted with CORD-19 may find this format familiar.
-
-Possible future components (no promises):
-- Linking bibliography entries (bibliography consolidation) to papers in S2ORC
+This project is forked from allen ai - https://github.com/allenai/s2orc-doc2json, which converts PDFs to JSON using Grobid and a custom TEI.XML to JSON parser. The original project converts TEI.XML to JSON parser (`grobid2json`). 
+In addition, this project converts the TEI.XML to text files, after it is being parsed to the Paper object in JSON format conversion ('doc2text'). It also invokes two versions of the Grobid service, the 0.6.1 version (for abstract, body text extracts) and the 0.7.1 sourced in the cloud.science-miner.com/grobid host for tables, figures and services. (This is done so, because of minor issues in raw text conversion in 0.7.1 version) 
 
 ## Setup your environment
 
@@ -48,67 +42,15 @@ The expected port for the Grobid service is 8070, but you can change this as wel
 
 ### Process a PDF
 
-There are a couple of test PDFs in `tests/input/` if you'd like to try with that.
-
-For example, you can try:
+Upload the pdf to be processed in the directory - doc2text/pdf_repo
 
 ```console
-python doc2json/grobid2json/process_pdf.py -i tests/pdf/N18-3011.pdf -t temp_dir/ -o output_dir/
+cd doc2text
+python doc2text/process_pdf_text.py -i pdf_repo/ -t temp_dir/ -o text_repo/
 ```
 
-This will generate a JSON file in the specified `output_dir`. If unspecified, the file will be in the `output/` directory from your path.
+This will generate a text file in the specified `text_repo`. 
 
-## LaTeX Processing
-
-If you want to process LaTeX, you also need to install the following libraries:
-
-- [latexpand](https://ctan.org/pkg/latexpand?lang=en) (`apt install texlive-extra-utils`)
-- [tralics](http://www-sop.inria.fr/marelle/tralics/) (`apt install tralics`)
-
-To process LaTeX, all files must be in a zip file, similar to the `*.gz` files you can download from arXiv. 
-
-A few examples are available under `tests/latex/`. For example, you can try:
-
-```console
-python doc2json/tex2json/process_tex.py -i test/latex/1911.02782.gz -t temp_dir/ -o output_dir/
-```
-
-Again, this will produce a JSON file in the specified `output_dir`.
-
-## PMC JATS XML Processing
-
-To process JATS XML, try:
-
-```console
-python doc2json/jats2json/process_jats.py -i test/jats/PMC5828200.nxml -o output_dir/
-```
-
-This will create a JSON file with the same paper id in the specified output directory.
-
-## Loading a S2ORC JSON file
-
-The format of S2ORC releases have drifted over time. Use the `load_s2orc` function in `doc2json/s2orc.py` to try and load historic and currect S2ORC JSON.
-
-## Run a Flask app and process documents through a web service
-
-To process PDFs, you will first need to start Grobid (defaults to port 8070). If you are processing LaTeX, no need for this step.
-
-```console
-bash scripts/run_grobid.sh
-```
-
-Then, start the Flask app (defaults to port 8080).
-
-```console
-python doc2json/flask/app.py
-```
-
-Go to [localhost:8080](localhost:8080) to upload and process papers.
-
-Or alternatively, you can do things like:
-
-```console
-curl localhost:8080/ -F file=@tests/pdf/N18-3011.pdf
 ```
 
 ## Citation

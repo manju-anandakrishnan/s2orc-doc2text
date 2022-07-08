@@ -4,3 +4,6 @@
 tests/output/*
 tests/temp/*
 .DS_Store
+doc2text/pdf_repo/*
+doc2text/temp/*
+doc2text/text_repo/*

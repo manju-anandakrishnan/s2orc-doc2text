@@ -307,8 +307,7 @@ class Metadata:
             "venue": self.venue,
             "identifiers": self.identifiers
         }
-
-
+    
 class Paragraph:
     """
     Class for representing a parsed paragraph from Grobid xml

@@ -18,6 +18,7 @@ require something scalable too, which is not implemented for the moment.
 '''
 
 DEFAULT_GROBID_CONFIG = {
+    "protocol":"http",
     "grobid_server": "localhost",
     "grobid_port": "8070",
     "batch_size": 1000,
@@ -43,6 +44,7 @@ class GrobidClient(ApiClient):
         self.grobid_server = self.config["grobid_server"]
         self.grobid_port = self.config["grobid_port"]
         self.sleep_time = self.config["sleep_time"]
+        self.protocol = self.config["protocol"]
 
     def process(self, input: str, output: str, service: str):
         batch_size_pdf = self.config['batch_size']
@@ -75,10 +77,9 @@ class GrobidClient(ApiClient):
             )
         }
 
-        the_url = 'http://' + self.grobid_server
-        the_url += ":" + self.grobid_port
+        the_url = self.protocol+'://'+ self.grobid_server
+        the_url += "" if self.grobid_port is None else ":" + self.grobid_port
         the_url += "/api/" + service
-
         # set the GROBID parameters
         the_data = {}
         if self.generate_ids:

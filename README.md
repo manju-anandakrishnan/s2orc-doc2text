@@ -51,8 +51,6 @@ python doc2text/process_pdf_text.py -i pdf_repo/ -t temp_dir/ -o text_repo/
 
 This will generate a text file in the specified `text_repo`. 
 
-```
-
 ## Citation
 
 If you use this utility in your research, please cite:

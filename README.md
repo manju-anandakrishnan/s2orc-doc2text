@@ -70,9 +70,3 @@ If you use this utility in your research, please cite:
 }
 ```
 
-## Contact
-
-Contributions are welcome. Note the embarassingly poor test coverage. Also, please note this pipeline is not perfect. It will miss text or make errors on most PDFs. The current PDF to JSON step uses Grobid; we may replace this with a different model in the future.
-
-Issues: contact `lucyw@allenai.org` or `kylel@allenai.org`
-

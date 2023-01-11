@@ -46,7 +46,7 @@ Upload the pdf to be processed in the directory - doc2text/pdf_repo
 
 ```console
 cd doc2text
-python doc2text/process_pdf_text.py -i pdf_repo/ -t temp_dir/ -o text_repo/
+python process_pdf_text.py -i pdf_repo/ -t temp_dir/ -o text_repo/
 ```
 
 This will generate a text file in the specified `text_repo`. 
